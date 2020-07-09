@@ -88,6 +88,10 @@ public class JsonParser {
         return parse(new Origin(data), null);
     }
 
+    static public JsonElement parseNoThrow(String data) {
+        return parseNoThrow(new Origin(data), null);
+    }
+
     static protected JsonElement parse(Origin origin, JsonElement parent) throws JsonParserException{
         char c = origin.getSkippingSpace();
 
@@ -135,6 +139,55 @@ public class JsonParser {
                     return new JsonNull(parent);
                 default:
                     throw new InvalidJsonException();
+            }
+        }
+
+        return null;
+    }
+
+    static protected JsonElement parseNoThrow(Origin origin, JsonElement parent) {
+        char c = origin.getSkippingSpace();
+
+        switch(c) {
+            case 0:
+                return null;
+            case '{':
+                origin.next();
+                return parseObjectNoThrow(origin, parent);
+            case '[':
+                origin.next();
+                return parseArrayNoThrow(origin, parent);
+            case '"': {
+                origin.next();
+                String value = parseString(origin);
+                return value != null ? new JsonString(parent, value) : null;
+            }
+            case '-':
+                c = origin.next();
+                if (isDigit(c))
+                    return parseNumber(origin, parent, true);
+                break;
+        }
+
+        if (isDigit(c)) {
+            return parseNumber(origin, parent, false);
+        }
+
+        if (isLetter(c)) {
+            StringBuilder b = new StringBuilder();
+            do {
+                b.append(c);
+                c = origin.next();
+            } while(isLetter(c));
+            switch(b.toString()) {
+                case "true":
+                    return new JsonBoolean(parent, true);
+                case "false":
+                    return new JsonBoolean(parent, false);
+                case "null":
+                    return new JsonNull(parent);
+                default:
+                    return null;
             }
         }
 
@@ -190,6 +243,55 @@ public class JsonParser {
         }
     }
 
+    static protected JsonObject parseObjectNoThrow(Origin origin, JsonElement parent) {
+        JsonObject obj = new JsonObject(parent);
+        int count = 0;
+
+        while(true) {
+            char c = origin.getSkippingSpace();
+
+            if (c == 0)
+                return null;
+            if (c == '}') {
+                origin.next();
+                return obj;
+            }
+            if (count > 0) {
+                if (c != ',')
+                    return null;
+                c = origin.nextSkippingSpace();
+                if (c == 0)
+                    return null;
+            }
+            String name = null;
+            if (c == '\"') {
+                origin.next();
+                name = parseString(origin);
+            }
+            else if (isLetter(c)) {
+                StringBuilder sb = new StringBuilder();
+                do {
+                    sb.append(c);
+                    c = origin.next();
+                } while(isLetter(c) || isDigit(c));
+                name = sb.toString();
+            }
+            if (name == null)
+                return null;
+            c = origin.getSkippingSpace();
+            if (c != ':')
+                return null;
+            c = origin.nextSkippingSpace();
+            if (c == 0)
+                return null;
+            JsonElement element = parseNoThrow(origin, obj);
+            if (element == null)
+                return null;
+            obj.addElement(name, element);
+            count++;
+        }
+    }
+
     static protected JsonArray parseArray(Origin origin, JsonElement parent) throws JsonParserException {
         JsonArray arr = new JsonArray(parent);
         int count = 0;
@@ -214,6 +316,35 @@ public class JsonParser {
             JsonElement element = parse(origin, arr);
             if (element == null)
                 throw new ExpectedArrayException();
+            arr.addElement(element);
+            count++;
+        }
+    }
+
+    static protected JsonArray parseArrayNoThrow(Origin origin, JsonElement parent) {
+        JsonArray arr = new JsonArray(parent);
+        int count = 0;
+
+        while(true) {
+            char c = origin.getSkippingSpace();
+            if (c == ']') {
+                origin.next();
+                return arr;
+            }
+            if (c == 0)
+                return null;
+            if (count > 0) {
+                if (c != ',')
+                    return null;
+                c = origin.nextSkippingSpace();
+                if (c == 0)
+                    return null;
+            }
+            if (c == ']')
+                continue;
+            JsonElement element = parseNoThrow(origin, arr);
+            if (element == null)
+                return null;
             arr.addElement(element);
             count++;
         }
