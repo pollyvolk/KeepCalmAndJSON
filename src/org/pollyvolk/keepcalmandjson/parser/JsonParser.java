@@ -71,6 +71,10 @@ public class JsonParser {
             return c;
         }
 
+        public int getIndex() {
+            return index;
+        }
+
         static protected boolean isSpace(char c) {
             switch(c) {
                 case ' ':
@@ -97,7 +101,7 @@ public class JsonParser {
 
         switch(c) {
             case 0:
-                return null;
+                throw new ExpectedJsonElementException();
             case '{':
                 origin.next();
                 return parseObject(origin, parent);
@@ -117,11 +121,7 @@ public class JsonParser {
         }
 
         if (isDigit(c)) {
-            JsonNumber number = parseNumber(origin, parent, false);
-            c = origin.getSkippingSpace();
-            if (c != 0)
-                throw new ExpectedNumberException();
-            return number;
+            return parseNumber(origin, parent, false);
         }
 
         if (isLetter(c)) {
@@ -142,7 +142,7 @@ public class JsonParser {
             }
         }
 
-        return null;
+        throw new ExpectedJsonElementException();
     }
 
     static protected JsonElement parseNoThrow(Origin origin, JsonElement parent) {
@@ -159,18 +159,18 @@ public class JsonParser {
                 return parseArrayNoThrow(origin, parent);
             case '"': {
                 origin.next();
-                String value = parseString(origin);
+                String value = parseStringNoThrow(origin);
                 return value != null ? new JsonString(parent, value) : null;
             }
             case '-':
                 c = origin.next();
                 if (isDigit(c))
-                    return parseNumber(origin, parent, true);
+                    return parseNumberNoThrow(origin, parent, true);
                 break;
         }
 
         if (isDigit(c)) {
-            return parseNumber(origin, parent, false);
+            return parseNumberNoThrow(origin, parent, false);
         }
 
         if (isLetter(c)) {
@@ -202,17 +202,17 @@ public class JsonParser {
             char c = origin.getSkippingSpace();
 
             if (c == 0)
-                return null;
+                throw new InvalidJsonException();
             if (c == '}') {
                 origin.next();
                 return obj;
             }
             if (count > 0) {
                 if (c != ',')
-                    return null;
+                    throw new InvalidJsonException();
                 c = origin.nextSkippingSpace();
                 if (c == 0)
-                    return null;
+                    throw new InvalidJsonException();
             }
             String name = null;
             if (c == '\"') {
@@ -227,18 +227,22 @@ public class JsonParser {
                 } while(isLetter(c) || isDigit(c));
                 name = sb.toString();
             }
+            if (c == '}')
+                continue;
             if (name == null)
                 throw new InvalidJsonException();
             c = origin.getSkippingSpace();
             if (c != ':')
-                return null;
+                throw new InvalidJsonException();
             c = origin.nextSkippingSpace();
             if (c == 0)
-                return null;
-            JsonElement element = parse(origin, obj);
-            if (element == null)
-                return null;
-            obj.addElement(name, element);
+                throw new InvalidJsonException();
+            try {
+                JsonElement element = parse(origin, obj);
+                obj.addElement(name, element);
+            } catch (JsonParserException e) {
+                throw new ExpectedJsonElementException();
+            }
             count++;
         }
     }
@@ -266,7 +270,7 @@ public class JsonParser {
             String name = null;
             if (c == '\"') {
                 origin.next();
-                name = parseString(origin);
+                name = parseStringNoThrow(origin);
             }
             else if (isLetter(c)) {
                 StringBuilder sb = new StringBuilder();
@@ -276,6 +280,8 @@ public class JsonParser {
                 } while(isLetter(c) || isDigit(c));
                 name = sb.toString();
             }
+            if (c == '}')
+                continue;
             if (name == null)
                 return null;
             c = origin.getSkippingSpace();
@@ -313,10 +319,12 @@ public class JsonParser {
             }
             if (c == ']')
                 continue;
-            JsonElement element = parse(origin, arr);
-            if (element == null)
+            try {
+                JsonElement element = parse(origin, arr);
+                arr.addElement(element);
+            } catch (JsonParserException e) {
                 throw new ExpectedArrayException();
-            arr.addElement(element);
+            }
             count++;
         }
     }
@@ -350,7 +358,64 @@ public class JsonParser {
         }
     }
 
-    static protected String parseString(Origin origin) {
+    static protected String parseString(Origin origin) throws ExpectedStringException {
+        StringBuilder sb = new StringBuilder();
+        char c = origin.get();
+        while (c != '\"' && c != 0) {
+            if (c == '\\') {
+                c = origin.next();
+                switch(c) {
+                    case '"':
+                        sb.append('"');
+                        break;
+                    case '\\':
+                        sb.append('\\');
+                        break;
+                    case '/':
+                        sb.append('/');
+                        break;
+                    case 'b':
+                        sb.append('\b');
+                        break;
+                    case 'f':
+                        sb.append('\f');
+                        break;
+                    case 'n':
+                        sb.append('\n');
+                        break;
+                    case 'r':
+                        sb.append('\r');
+                        break;
+                    case 't':
+                        sb.append('\t');
+                        break;
+                    case 'u': {
+                        int h = 0;
+                        for (int i = 0; i < 4; i++) {
+                            c = origin.next();
+                            if (!isHexDigit(c))
+                                throw new ExpectedStringException();
+                            h = (h << 4) | convertHexDigit(c);
+                        }
+                        c = (char)h;
+                        sb.append(c);
+                        break;
+                    }
+                    default:
+                        throw new ExpectedStringException();
+                }
+            }
+            else
+                sb.append(c);
+            c = origin.next();
+        }
+        if (c == 0)
+            throw new ExpectedStringException();;
+        origin.next();
+        return sb.toString();
+    }
+
+    static protected String parseStringNoThrow(Origin origin) {
         StringBuilder sb = new StringBuilder();
         char c = origin.get();
         while (c != '\"' && c != 0) {
@@ -407,7 +472,8 @@ public class JsonParser {
         return sb.toString();
     }
 
-    static protected JsonNumber parseNumber(Origin origin, JsonElement parent, boolean neg) {
+    static protected JsonNumber parseNumberNoThrow(Origin origin, JsonElement parent, boolean neg) {
+        boolean isSingleNumber = isSingleNumber(origin, neg);
         StringBuilder sb = new StringBuilder();
         char c = origin.get();
         do {
@@ -424,6 +490,12 @@ public class JsonParser {
                 } while(isDigit(c));
             }
         }
+        c = origin.getSkippingSpace();
+        if (isSingleNumber) {
+            if (c != 0)
+                return null;
+        } else if (c != ',' && c != '}' && c != ']')
+            return null;
         try {
             double value = Double.parseDouble(sb.toString());
             return new JsonNumber(parent, neg ? -value : value);
@@ -433,6 +505,46 @@ public class JsonParser {
         }
     }
 
+    static protected JsonNumber parseNumber(Origin origin, JsonElement parent, boolean neg) throws ExpectedNumberException {
+        boolean isSingleNumber = isSingleNumber(origin, neg);
+        StringBuilder sb = new StringBuilder();
+        char c = origin.get();
+        do {
+            sb.append(c);
+            c = origin.next();
+        } while(isDigit(c));
+        if (c == '.') {
+            sb.append(c);
+            c = origin.next();
+            if (isDigit(c)) {
+                do {
+                    sb.append(c);
+                    c = origin.next();
+                } while(isDigit(c));
+            }
+        }
+        c = origin.getSkippingSpace();
+        if (isSingleNumber) {
+            if (c != 0)
+                throw new ExpectedNumberException();
+        } else if (c != ',' && c != '}' && c != ']')
+            throw new ExpectedNumberException();
+        try {
+            double value = Double.parseDouble(sb.toString());
+            return new JsonNumber(parent, neg ? -value : value);
+        }
+        catch (NumberFormatException e) {
+            throw new ExpectedNumberException();
+        }
+    }
+
+    static protected boolean isSingleNumber(Origin origin, boolean neg) {
+        int index = origin.getIndex();
+        if (neg)
+            return (index == 1);
+        else
+            return ( index == 0);
+    }
     static protected boolean isLetter(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_';
     }
