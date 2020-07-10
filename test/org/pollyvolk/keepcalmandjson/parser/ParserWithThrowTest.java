@@ -24,13 +24,16 @@
 package org.pollyvolk.keepcalmandjson.parser;
 
 import org.junit.Test;
-import org.pollyvolk.keepcalmandjson.types.*;
+import org.pollyvolk.keepcalmandjson.parser.exceptions.JsonParserException;
+import org.pollyvolk.keepcalmandjson.types.JsonArray;
+import org.pollyvolk.keepcalmandjson.types.JsonElement;
+import org.pollyvolk.keepcalmandjson.types.JsonObject;
 
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ParserTest {
+public class ParserWithThrowTest {
 
     @Test
     public void testObjectParsing() {
@@ -54,7 +57,13 @@ public class ParserTest {
                 "  }\n" +
                 "}";
 
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
+        assertNotNull(element);
         JsonObject object = element.toJsonObject();
         assertNotNull(object);
         assertFalse(object.isEmpty());
@@ -98,7 +107,12 @@ public class ParserTest {
     public void testIntNumberParsing() {
         String input = "123";
         int expected = 123;
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getIntValue(), 0);
     }
@@ -107,7 +121,12 @@ public class ParserTest {
     public void testNegativeNumberParsing() {
         String input = "-123";
         int expected = -123;
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getIntValue(), 0);
     }
@@ -115,7 +134,12 @@ public class ParserTest {
     public void testFloatNumberParsing() {
         String input = "12.370";
         double expected = 12.37;
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getDoubleValue(), 0);
     }
@@ -124,7 +148,12 @@ public class ParserTest {
     public void testLongIntNumberParsing() {
         String input = "922337203685";
         long expected = 922337203685L;
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getLongValue(), 0);
     }
@@ -133,7 +162,12 @@ public class ParserTest {
     public void testHexDigitParsing() {
         String input = "\"\\u000F \\u001e\"";
         String expected = "\u000F \u001e";
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getStringValue());
     }
@@ -142,7 +176,12 @@ public class ParserTest {
     public void testJsonStringParsing() {
         String input = "\"Parser\"";
         String expected = "Parser";
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getStringValue());
     }
@@ -151,7 +190,12 @@ public class ParserTest {
     @Test
     public void testJsonNullParsing() {
         String input = "null";
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertTrue(element.isNull());
     }
@@ -159,7 +203,12 @@ public class ParserTest {
     @Test
     public void testBoolTrueParsing() {
         String input = "true";
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertTrue(element.isBoolean());
         assertTrue(element.getBooleanValue());
@@ -168,7 +217,12 @@ public class ParserTest {
     @Test
     public void testBoolFalseParsing() {
         String input = "false";
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertTrue(element.isBoolean());
         assertFalse(element.getBooleanValue());
@@ -183,8 +237,12 @@ public class ParserTest {
                 "  1,\n" +
                 "  2\n" +
                 "]";
-        JsonElement element = JsonParser.parseNoThrow(input);
-        JsonArray array = element.toJsonArray();
+        JsonArray array = null;
+        try {
+            array = JsonParser.parse(input).toJsonArray();
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(array);
         assertEquals(4, array.size());
     }
@@ -193,13 +251,17 @@ public class ParserTest {
     public void testArrayWithTrailingComaParsing() {
         String input =
                 "[\n" +
-                "  \"str1\",\n" +
-                "  \"str2\",\n" +
-                "  1,\n" +
-                "  2,\n" +
-                "]";
-        JsonElement element = JsonParser.parseNoThrow(input);
-        JsonArray array = element.toJsonArray();
+                 "  \"str1\",\n" +
+                 "  \"str2\",\n" +
+                 "  1,\n" +
+                 "  2,\n" +
+                 "]";
+        JsonArray array = null;
+        try {
+            array = JsonParser.parse(input).toJsonArray();
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(array);
         assertEquals(4, array.size());
     }
@@ -210,14 +272,24 @@ public class ParserTest {
                 "\t\"key1\" : \"value1\",\n" +
                 "\t\"key2\" : \"value2\",\n" +
                 "}";
-        JsonElement element = JsonParser.parseNoThrow(input);
-        JsonObject object = element.toJsonObject();
+        JsonObject object = null;
+        try {
+            object = JsonParser.parse(input).toJsonObject();;
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(object);
         assertEquals(2, object.size());
     }
 
+
     public void testEscapeSequencesParsing(String expected, String input) {
-        JsonElement element = JsonParser.parseNoThrow(input);
+        JsonElement element = null;
+        try {
+            element = JsonParser.parse(input);
+        } catch (JsonParserException e) {
+            e.printStackTrace();
+        }
         assertNotNull(element);
         assertEquals(expected, element.getStringValue());
     }
