@@ -42,55 +42,55 @@ public class CheckParserExceptionsTest {
     }
 
     @Test
-    public void testInput1() {
+    public void testObjectWithElementsWithoutQuotes() {
         String input = "{ 12 : 345}";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput2() {
+    public void testObjectWithWrongKey() {
         String input = "{ 65 : \"value\"}";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput3() {
+    public void testObjectWithoutKey() {
         String input = "{ : \"value\"}";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput4() {
+    public void testObjectWithoutFigureBrackets() {
         String input = "key : \"value\"";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput5() {
+    public void testObjectValueWithoutQuotes() {
         String input = "{ key : value}";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput6() {
+    public void testObjectWithSquareBrackets() {
         String input = "[\"test\" : 123]";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput7() {
+    public void testArrayWithoutClosingBracket() {
         String input = "[\"test\", \"hello\"";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput8() {
+    public void testArrayWithTrailingComaWithoutClosingBracket() {
         String input = "[\"test\", \"hello\",";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput9() {
+    public void testArrayWithWrongElement() {
         String input = "[\"test\", FALSE]";
         testExceptOccurrence(input);
     }
@@ -102,73 +102,73 @@ public class CheckParserExceptionsTest {
     }
 
     @Test
-    public void testInput11() {
+    public void testHexNumberWithNotHexDigitChars() {
         String input = "\"\\u000$";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput12() {
+    public void testWrongEscapeChar() {
         String input = "\"test\\*symbols\"";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput13() {
+    public void testStringWithoutClosingQuote() {
         String input = "\"testing";
         testExceptOccurrence(input);
     }
 
-    @Test
-    public void testInput14() {
-        String input = "[1, 2, 3";
-        testExceptOccurrence(input);
+   @Test
+    public void testWrongNumberFormatInsideArray() {
+        String input = "[1, 2 &*&, 3]";
+       testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput15() {
+    public void testArrayWithWrongBrackets() {
         String input = "[1, 2, 3 }";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput16() {
+    public void testObjectWithoutClosingBracket() {
         String input = "{\"key\" : \"value\"";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput17() {
+    public void testObjectWithWrongFormat() {
         String input = "{\"key\" : \"value\" :";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput18() {
+    public void testEntryFigureBracketWithoutElements() {
         String input = "{";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput19() {
+    public void testObjectWithOnlyKey() {
         String input = "{\"key\"}";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput20() {
+    public void testObjectWithKeyAndEmptyValue() {
         String input = "{\"key\" :";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput21() {
+    public void testObjectWithTrailingComaWithoutClosingBracket() {
         String input = "{\"key\" : \"value\",";
         testExceptOccurrence(input);
     }
 
     @Test
-    public void testInput22() {
+    public void testObjectWithWrongClosingBracket() {
         String input = "{\n" +
                     "\t\"key1\" : \"value1\",\n" +
                     "\t\"key2\" : \"value2\"\n" +

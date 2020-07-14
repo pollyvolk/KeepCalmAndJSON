@@ -223,63 +223,56 @@ public class ParserTest {
     }
 
     @Test
-    public void testEscapeSequences1() {
+    public void testBackspaceEscapeSequence() {
         String input = "\"test\\bsymbols\"";
         String expected = "test\bsymbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences2() {
+    public void testTabEscapeSequence() {
         String input = "\"test\\tsymbols\"";
         String expected = "test\tsymbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences3() {
+    public void testNewLineEscapeSequence() {
         String input = "\"test\\nsymbols\"";
         String expected = "test\nsymbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences4() {
+    public void testFormFeedEscapeSequence() {
         String input = "\"test\\fsymbols\"";
         String expected = "test\fsymbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences5() {
+    public void testCarriageReturnEscapeSequence() {
         String input = "\"test\\rsymbols\"";
         String expected = "test\rsymbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences6() {
-        String input = "\"test\\tsymbols\"";
-        String expected = "test\tsymbols";
-        testEscapeSequencesParsing(expected, input);
-    }
-
-    @Test
-    public void testEscapeSequences7() {
+    public void testDoubleQuoteEscapeSequence() {
         String input = "\"test\\\"symbols\"";
         String expected = "test\"symbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences8() {
+    public void testBackslashEscapeSequence() {
         String input = "\"test\\\\symbols\"";
         String expected = "test\\symbols";
         testEscapeSequencesParsing(expected, input);
     }
 
     @Test
-    public void testEscapeSequences9() {
+    public void testSlashEscapeSequence() {
         String input = "\"test\\/symbols\"";
         String expected = "test/symbols";
         testEscapeSequencesParsing(expected, input);
