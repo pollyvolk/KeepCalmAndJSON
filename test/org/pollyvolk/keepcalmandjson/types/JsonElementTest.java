@@ -30,24 +30,45 @@ import static org.junit.Assert.*;
 public class JsonElementTest {
 
     @Test
-    public void testJsonElementEscapeSequences() {
-        JsonString example1 = new JsonString(null,"test\bsymbols");
-        JsonString example2 = new JsonString(null,"test\tsymbols");
-        JsonString example3 = new JsonString(null,"test\nsymbols");
-        JsonString example4 = new JsonString(null,"test\fsymbols");
-        JsonString example5 = new JsonString(null,"test\rsymbols");
-        JsonString example6 = new JsonString(null,"test\tsymbols");
-        JsonString example7 = new JsonString(null,"test\"symbols");
-        JsonString example8 = new JsonString(null,"test\\symbols");
+    public void testBackspaceEscapeSequence() {
+        JsonString string = new JsonString(null,"test\bsymbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\bsymbols\"", string);
+    }
 
-        GeneralTest.testNoExceptionStringFormat("\"test\\bsymbols\"", example1);
-        GeneralTest.testNoExceptionStringFormat("\"test\\tsymbols\"", example2);
-        GeneralTest.testNoExceptionStringFormat("\"test\\nsymbols\"", example3);
-        GeneralTest.testNoExceptionStringFormat("\"test\\fsymbols\"", example4);
-        GeneralTest.testNoExceptionStringFormat("\"test\\rsymbols\"", example5);
-        GeneralTest.testNoExceptionStringFormat("\"test\\tsymbols\"", example6);
-        GeneralTest.testNoExceptionStringFormat("\"test\\\"symbols\"", example7);
-        GeneralTest.testNoExceptionStringFormat("\"test\\\\symbols\"", example8);
+    @Test
+    public void testTabEscapeSequence() {
+        JsonString string = new JsonString(null,"test\tsymbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\tsymbols\"", string);
+    }
+
+    @Test
+    public void testNewLineEscapeSequence() {
+        JsonString string = new JsonString(null,"test\nsymbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\nsymbols\"", string);
+    }
+
+    @Test
+    public void testFormFeedEscapeSequence() {
+        JsonString string = new JsonString(null,"test\fsymbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\fsymbols\"", string);
+    }
+
+    @Test
+    public void testCarriageReturnEscapeSequence() {
+        JsonString string = new JsonString(null,"test\rsymbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\rsymbols\"", string);
+    }
+
+    @Test
+    public void testDoubleQuoteEscapeSequence() {
+        JsonString string = new JsonString(null,"test\"symbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\\"symbols\"", string);
+    }
+
+    @Test
+    public void testBackslashEscapeSequence() {
+        JsonString string = new JsonString(null,"test\\symbols");
+        GeneralTest.testNoExceptionStringFormat("\"test\\\\symbols\"", string);
     }
 
     @Test
@@ -105,7 +126,7 @@ public class JsonElementTest {
 
     @Test
     public void testJsonElementSpecificSymbols() {
-        JsonString example = new JsonString(null, "тест");
-        GeneralTest.testNoExceptionStringFormat("\"\\u0442\\u0435\\u0441\\u0442\"", example);
+        JsonString string = new JsonString(null, "тест");
+        GeneralTest.testNoExceptionStringFormat("\"\\u0442\\u0435\\u0441\\u0442\"", string);
     }
 }
