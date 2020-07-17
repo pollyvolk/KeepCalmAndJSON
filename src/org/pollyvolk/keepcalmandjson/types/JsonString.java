@@ -23,27 +23,55 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON string element type extending JSON abstract element.
+ */
 public final class JsonString extends JsonElement {
 
+    /**
+     * JSON string element value.
+     */
     private final String value;
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     * @param value String value.
+     */
     public JsonString(JsonElement parent, String value) {
         super(parent);
         this.value = value;
     }
 
+    /**
+     * Convert JsonString to a string format.
+     * @param sb StringBuilder containing a string representation of JSON string type.
+     */
     protected void buildString(StringBuilder sb) {
         buildJsonString(sb, value);
     }
 
+    /**
+     * Convert JsonString to a string format with indention.
+     * @param sb StringBuilder containing a string representation of JSON string type.
+     * @param indent Indention value.
+     */
     protected void buildString(StringBuilder sb, int indent) {
         buildJsonString(sb, value);
     }
 
+    /**
+     * Get a string value of the element.
+     * @return String value of JSON string.
+     */
     public String getStringValue() {
         return value;
     }
 
+    /**
+     * Check if the element is a JsonString.
+     * @return TRUE.
+     */
     public boolean isString() {
         return true;
     }

@@ -23,86 +23,169 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON abstract element.
+ */
 public abstract class JsonElement {
 
+    /**
+     * JsonElement parent of current element.
+     */
     private JsonElement parent;
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     */
     public JsonElement(JsonElement parent) {
         this.parent = parent;
     }
 
+    /**
+     * Get the parent of the element.
+     * @return Parent JsonElement.
+     */
     public JsonElement getParent() {
         return parent;
     }
 
+    /**
+     * Convert element to a string format.
+     * @return String containing a string representation of JSON element.
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         buildString(sb);
         return sb.toString();
     }
 
+    /**
+     * Convert element to a string format with indents.
+     * @return String containing a string representation of JSON element with all indents.
+     */
     public String toStringWithIndents() {
         StringBuilder sb = new StringBuilder();
         buildString(sb, 0);
         return sb.toString();
     }
 
+    /**
+     * Get a string value of the element.
+     * @return String value of JSON element.
+     */
     public String getStringValue() {
         return toString();
     }
 
+    /**
+     * Get an int value of the element.
+     * @return 0.
+     */
     public int getIntValue() {
         return 0;
     }
 
+    /**
+     * Get a long value of the element.
+     * @return 0.
+     */
     public long getLongValue() {
         return 0;
     }
 
+    /**
+     * Get a double value of the element.
+     * @return 0.
+     */
     public double getDoubleValue() {
         return 0;
     }
 
+    /**
+     * Get a boolean value of the element.
+     * @return 0.
+     */
     public boolean getBooleanValue() {
         return false;
     }
 
+    /**
+     * Check if the element is a JsonString.
+     * @return FALSE.
+     */
     public boolean isString() {
         return false;
     }
 
+    /**
+     * Check if the element is a JsonNumber.
+     * @return FALSE.
+     */
     public boolean isNumber() {
         return false;
     }
 
+    /**
+     * Check if the JsonNumber element contains integer value.
+     * @return FALSE.
+     */
     public boolean isInteger() {
         return false;
     }
 
+    /**
+     * Check if the JsonNumber element contains long value.
+     * @return FALSE.
+     */
     public boolean isLongInteger() {
         return false;
     }
 
+    /**
+     * Check if the element is a JsonBoolean.
+     * @return FALSE.
+     */
     public boolean isBoolean() {
         return false;
     }
 
+    /**
+     * Check if the element is a JsonNull.
+     * @return FALSE.
+     */
     public boolean isNull() {
         return false;
     }
 
+    /**
+     * Convert the element to a JsonContainer.
+     * @return NULL.
+     */
     public JsonContainer toJsonContainer() {
         return null;
     }
 
+    /**
+     * Convert the element to a JsonObject.
+     * @return NULL.
+     */
     public JsonObject toJsonObject() {
         return null;
     }
 
+    /**
+     * Convert the element to a JsonArray.
+     * @return NULL.
+     */
     public JsonArray toJsonArray() {
         return null;
     }
 
+    /**
+     * Add indention to string representation of JSON element.
+     * @param sb StringBuilder containing a string representation of JSON element.
+     * @param indent Indention value.
+     */
     protected static void buildIndent(StringBuilder sb, int indent) {
         if (indent > 0) {
             for (int i = 0; i < indent; i++)
@@ -110,6 +193,11 @@ public abstract class JsonElement {
         }
     }
 
+    /**
+     * Convert JsonString value to a string format.
+     * @param sb StringBuilder containing a string representation of JSON element.
+     * @param value Indention JsonString value.
+     */
     protected static void buildJsonString(StringBuilder sb, String value) {
         sb.append('"');
         for (int i = 0, len = value.length(); i < len; i++) {
@@ -151,7 +239,16 @@ public abstract class JsonElement {
         parent = elem;
     }
 
+    /**
+     * Convert element to a string format.
+     * @param sb StringBuilder containing a string representation of JSON element.
+     */
     protected abstract void buildString(StringBuilder sb);
 
+    /**
+     * Convert element to a string format with indention.
+     * @param sb StringBuilder containing a string representation of JSON element.
+     * @param indent Indention value.
+     */
     protected abstract void buildString(StringBuilder sb, int indent);
 }

@@ -23,27 +23,55 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON boolean element type extending JSON abstract element.
+ */
 public final class JsonBoolean extends JsonElement {
 
+    /**
+     * JSON boolean element value.
+     */
     private final boolean value;
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     * @param value Specified boolean value.
+     */
     public JsonBoolean(JsonElement parent, boolean value) {
         super(parent);
         this.value = value;
     }
 
+    /**
+     * Convert JsonBoolean to a string format.
+     * @param sb StringBuilder containing a string representation of JSON boolean type.
+     */
     protected void buildString(StringBuilder sb) {
         sb.append(value);
     }
 
-    protected void buildString(StringBuilder bld, int indent) {
-        bld.append(value);
+    /**
+     * Convert JsonBoolean to a string format with indention.
+     * @param sb StringBuilder containing a string representation of JSON boolean type.
+     * @param indent Indention value.
+     */
+    protected void buildString(StringBuilder sb, int indent) {
+        sb.append(value);
     }
 
+    /**
+     * Get JsonBoolean value.
+     * @return JsonBoolean value.
+     */
     public boolean getBooleanValue() {
         return value;
     }
 
+    /**
+     * Check if the JsonElement object is a JsonBoolean object.
+     * @return TRUE.
+     */
     public boolean isBoolean() {
         return true;
     }

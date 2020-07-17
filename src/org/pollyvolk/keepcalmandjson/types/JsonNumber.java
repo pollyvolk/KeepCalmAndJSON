@@ -23,14 +23,30 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON numeric element type extending JSON abstract element.
+ */
 public final class JsonNumber extends JsonElement {
+
+    /**
+     * JSON numeric element value.
+     */
     private final double value;
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     * @param value Double value.
+     */
     public JsonNumber(JsonElement parent, double value) {
         super(parent);
         this.value = value;
     }
 
+    /**
+     * Convert JsonNumber to a string format.
+     * @param sb StringBuilder containing a string representation of JSON number type.
+     */
     protected void buildString(StringBuilder sb) {
         String fmtValue;
         if (value == (long)value)
@@ -40,32 +56,61 @@ public final class JsonNumber extends JsonElement {
         sb.append(fmtValue);
     }
 
+    /**
+     * Convert JsonNumber to a string format with indention.
+     * @param sb StringBuilder containing a string representation of JSON number type.
+     * @param indent Indention value.
+     */
     protected void buildString(StringBuilder sb, int indent) {
         buildString(sb);
     }
 
+    /**
+     * Get an int value of the JsonNumber element.
+     * @return Integer value of JsonNumber element.
+     */
     public int getIntValue() {
         int intValue = (int)value;
         return intValue == value ? intValue : 0;
     }
 
+    /**
+     * Get a long value of the JsonNumber element.
+     * @return Long value of JsonNumber element.
+     */
     public long getLongValue() {
         long longValue = (long)value;
         return longValue == value ? longValue : 0;
     }
 
+    /**
+     * Get a double value of the JsonNumber element.
+     * @return Double value of JsonNumber element.
+     */
     public double getDoubleValue() {
         return value;
     }
 
+    /**
+     * Check if the element is a JsonNumber.
+     * @return TRUE.
+     */
     public boolean isNumber() {
         return true;
     }
 
+    /**
+     * Check if the JsonNumber element contains integer value.
+     * @return TRUE if JsonNumber element has integer value.
+     */
     public boolean isInteger() {
         return value == (int)value;
     }
 
+    /**
+     * Check if the JsonNumber element contains long value.
+     * @return TRUE if JsonNumber element has long value.
+     */
     public boolean isLongInteger() {
         return value == (long)value;
     }

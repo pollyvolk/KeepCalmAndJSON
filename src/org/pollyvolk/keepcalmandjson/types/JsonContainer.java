@@ -23,16 +23,36 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON abstract container of JSON elements, e.g. JSON array and JSON object types.
+ */
 public abstract class JsonContainer extends JsonElement {
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     */
     public JsonContainer(JsonElement parent) {
         super(parent);
     }
 
+    /**
+     * Convert JsonElement object to JsonContainer.
+     * @return Self.
+     */
     public JsonContainer toJsonContainer() {
         return this;
     }
 
+    /**
+     * Get an amount of container elements.
+     * @return Int value of container elements amount.
+     */
     public abstract int size();
+
+    /**
+     * Check if the container is empty.
+     * @return TRUE if container is empty.
+     */
     public abstract boolean isEmpty();
 }

@@ -23,20 +23,40 @@
  */
 package org.pollyvolk.keepcalmandjson.types;
 
+/**
+ * JSON null element type extending JSON abstract element.
+ */
 public final class JsonNull extends JsonElement {
 
+    /**
+     * Constructor.
+     * @param parent Parent JsonElement.
+     */
     public JsonNull(JsonElement parent) {
         super(parent);
     }
 
+    /**
+     * Convert JsonNull to a string format.
+     * @param sb StringBuilder containing a string representation of JSON null type.
+     */
     protected void buildString(StringBuilder sb) {
         sb.append("null");
     }
 
+    /**
+     * Convert JsonNull to a string format with indention.
+     * @param sb StringBuilder containing a string representation of JSON boolean type.
+     * @param indent Indention value.
+     */
     protected void buildString(StringBuilder sb, int indent) {
         sb.append("null");
     }
 
+    /**
+     * Check if the element is a JsonNull.
+     * @return TRUE.
+     */
     public boolean isNull() {
         return true;
     }
