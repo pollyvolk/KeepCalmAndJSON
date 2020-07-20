@@ -36,7 +36,9 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 ```
 
 #### Trailing commas permitted
-#####Example 1
+
+**Example 1**
+
 ```
 {
   "key1" : "value1",
@@ -44,7 +46,7 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
   "key3" : 123,
 }
 ```
-#####Example 2
+**Example 2**
 ```
 {
   "key1" : "value1",
@@ -57,7 +59,7 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 }
 ```
 
-##Examples of using
+## Examples of using
 
 #### Example of parsing JSON from source String
 ```
