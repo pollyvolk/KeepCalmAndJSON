@@ -23,7 +23,14 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * 'Expected a number' exception.
+ */
 public class ExpectedNumberException extends JsonParserException {
+
+    /**
+     * Constructor.
+     */
     public ExpectedNumberException() {
     }
 

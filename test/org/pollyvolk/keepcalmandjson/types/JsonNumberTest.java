@@ -27,6 +27,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonNumber}.
+ */
 public class JsonNumberTest {
 
     @Test

@@ -23,10 +23,20 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * Exception thrown by parser {@link org.pollyvolk.keepcalmandjson.parser.JsonParser}.
+ */
 public abstract class JsonParserException extends Exception {
 
+    /**
+     * Constructor.
+     */
     public JsonParserException() {
     }
 
+    /**
+     * Get exception message.
+     * @return String value of message.
+     */
     abstract public String getErrorMessage();
 }

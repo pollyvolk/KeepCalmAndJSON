@@ -23,7 +23,14 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * 'Invalid JSON format' exception.
+ */
 public class InvalidJsonException extends JsonParserException {
+
+    /**
+     * Constructor.
+     */
     public InvalidJsonException() {
     }
 

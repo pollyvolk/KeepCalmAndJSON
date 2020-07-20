@@ -27,6 +27,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonBoolean}.
+ */
 public class JsonBooleanTest {
 
     @Test

@@ -28,6 +28,9 @@ import org.pollyvolk.keepcalmandjson.types.JsonElement;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonParser} null returning.
+ */
 public class ParserNullReturnTest {
 
     public void testNullReturn(String input) {

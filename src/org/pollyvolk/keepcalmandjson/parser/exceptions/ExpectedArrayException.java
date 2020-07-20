@@ -23,7 +23,14 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * 'Expected an array' exception.
+ */
 public class ExpectedArrayException extends JsonParserException {
+
+    /**
+     * Constructor.
+     */
     public ExpectedArrayException() {
     }
 

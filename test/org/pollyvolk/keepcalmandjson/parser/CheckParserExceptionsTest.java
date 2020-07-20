@@ -28,6 +28,9 @@ import org.pollyvolk.keepcalmandjson.parser.exceptions.JsonParserException;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonParser} throwing {@link JsonParserException} exceptions.
+ */
 public class CheckParserExceptionsTest {
 
     public void testExceptOccurrence(String input) {

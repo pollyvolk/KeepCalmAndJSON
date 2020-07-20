@@ -30,6 +30,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonArray}.
+ */
 public class JsonArrayTest {
 
     @Test
@@ -99,7 +102,7 @@ public class JsonArrayTest {
         JsonElement item = jsonArray.getElementAt(2);
         assertNotNull(item);
         assertTrue(item.isBoolean());
-        assertEquals(true, item.getBooleanValue());
+        assertTrue(item.getBooleanValue());
     }
 
     @Test

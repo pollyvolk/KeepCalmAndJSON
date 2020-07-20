@@ -23,7 +23,14 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * 'Expected a SON element' exception.
+ */
 public class ExpectedJsonElementException extends JsonParserException {
+
+    /**
+     * Constructor.
+     */
     public ExpectedJsonElementException(){
     }
 

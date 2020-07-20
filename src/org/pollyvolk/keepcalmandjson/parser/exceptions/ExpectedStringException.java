@@ -23,7 +23,14 @@
  */
 package org.pollyvolk.keepcalmandjson.parser.exceptions;
 
+/**
+ * 'Expected a string' exception.
+ */
 public class ExpectedStringException extends JsonParserException {
+
+    /**
+     * Constructor.
+     */
     public ExpectedStringException() {
     }
 

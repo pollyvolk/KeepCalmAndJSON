@@ -25,6 +25,9 @@ package org.pollyvolk.keepcalmandjson.types;
 
 import static org.junit.Assert.*;
 
+/**
+ * Common test case for JSON type classes.
+ */
 public class GeneralTest {
 
     static void testNoExceptionStringFormat(String expected, JsonElement result) {

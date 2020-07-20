@@ -27,20 +27,45 @@ import org.pollyvolk.keepcalmandjson.parser.exceptions.*;
 
 import org.pollyvolk.keepcalmandjson.types.*;
 
+/**
+ * JSON parser of String source.
+ */
 public class JsonParser {
 
+    /**
+     * Origin data.
+     */
     static protected class Origin {
 
+        /**
+         * String value of source data.
+         */
         private final String data;
+
+        /**
+         * Index of current char being processed.
+         */
         private int index;
+
+        /**
+         * Index of the last char.
+         */
         private final int maxIndex;
 
+        /**
+         * Constructor.
+         * @param data String value of source data.
+         */
         Origin(String data) {
             this.data = data;
             index = 0;
             maxIndex = data != null ? data.length() : 0;
         }
 
+        /**
+         * Get char at the current position.
+         * @return Char at the index position.
+         */
         public char get() {
             if (index < maxIndex)
                 return data.charAt(index);
@@ -48,6 +73,10 @@ public class JsonParser {
                 return 0;
         }
 
+        /**
+         * Get char at the current position, but skip spaces.
+         * @return Current char or next char that is not a space.
+         */
         public char getSkippingSpace() {
             char c = get();
             while (isSpace(c))
@@ -55,6 +84,10 @@ public class JsonParser {
             return c;
         }
 
+        /**
+         * Get next char.
+         * @return Char at the next after index position.
+         */
         public char next() {
             if (index < maxIndex) {
                 index++;
@@ -64,6 +97,10 @@ public class JsonParser {
                 return 0;
         }
 
+        /**
+         * Get char at the next position, but skip spaces.
+         * @return Next char after index position or next char that is not a space.
+         */
         public char nextSkippingSpace() {
             char c = next();
             while (isSpace(c))
@@ -71,10 +108,18 @@ public class JsonParser {
             return c;
         }
 
+        /**
+         * Get current index.
+         * @return index.
+         */
         public int getIndex() {
             return index;
         }
 
+        /**
+         * Check if char is a space.
+         * @return TRUE if char is a space, newline, carriage return or tab escape sequence.
+         */
         static protected boolean isSpace(char c) {
             switch(c) {
                 case ' ':
@@ -88,14 +133,32 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse origin data.
+     * @param data String data.
+     * @return JsonElement element.
+     * @throws JsonParserException if fails.
+     */
     static public JsonElement parse(String data) throws JsonParserException {
         return parse(new Origin(data), null);
     }
 
+    /**
+     * Parse origin data.
+     * @param data String data.
+     * @return JsonElement element.
+     */
     static public JsonElement parseNoThrow(String data) {
         return parseNoThrow(new Origin(data), null);
     }
 
+    /**
+     * Parse JSON element in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonElement element.
+     * @throws JsonParserException if fails.
+     */
     static protected JsonElement parse(Origin origin, JsonElement parent) throws JsonParserException{
         char c = origin.getSkippingSpace();
 
@@ -145,6 +208,12 @@ public class JsonParser {
         throw new ExpectedJsonElementException();
     }
 
+    /**
+     * Parse JSON element in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonElement element.
+     */
     static protected JsonElement parseNoThrow(Origin origin, JsonElement parent) {
         char c = origin.getSkippingSpace();
 
@@ -194,6 +263,13 @@ public class JsonParser {
         return null;
     }
 
+    /**
+     * Parse JSON object in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonObject element.
+     * @throws JsonParserException if fails.
+     */
     static protected JsonObject parseObject(Origin origin, JsonElement parent) throws JsonParserException {
         JsonObject obj = new JsonObject(parent);
         int count = 0;
@@ -247,6 +323,12 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse JSON object in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonObject element.
+     */
     static protected JsonObject parseObjectNoThrow(Origin origin, JsonElement parent) {
         JsonObject obj = new JsonObject(parent);
         int count = 0;
@@ -298,6 +380,13 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse JSON array in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonArray element.
+     * @throws JsonParserException if fails.
+     */
     static protected JsonArray parseArray(Origin origin, JsonElement parent) throws JsonParserException {
         JsonArray arr = new JsonArray(parent);
         int count = 0;
@@ -329,6 +418,12 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse JSON array in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @return JsonArray element.
+     */
     static protected JsonArray parseArrayNoThrow(Origin origin, JsonElement parent) {
         JsonArray arr = new JsonArray(parent);
         int count = 0;
@@ -358,6 +453,12 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse JSON string in origin data.
+     * @param origin Origin data object.
+     * @return JsonString element.
+     * @throws ExpectedStringException if fails.
+     */
     static protected String parseString(Origin origin) throws ExpectedStringException {
         StringBuilder sb = new StringBuilder();
         char c = origin.get();
@@ -415,6 +516,11 @@ public class JsonParser {
         return sb.toString();
     }
 
+    /**
+     * Parse JSON string in origin data.
+     * @param origin Origin data object.
+     * @return JsonString element.
+     */
     static protected String parseStringNoThrow(Origin origin) {
         StringBuilder sb = new StringBuilder();
         char c = origin.get();
@@ -472,6 +578,14 @@ public class JsonParser {
         return sb.toString();
     }
 
+    /**
+     * Parse JSON number in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @param neg TRUE if number is negative.
+     * @return JsonNumber element.
+     * @throws ExpectedNumberException if fails.
+     */
     static protected JsonNumber parseNumber(Origin origin, JsonElement parent, boolean neg) throws ExpectedNumberException {
         boolean isSingleNumber = isSingleNumber(origin, neg);
         StringBuilder sb = new StringBuilder();
@@ -505,6 +619,13 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Parse JSON number in origin data.
+     * @param origin Origin data object.
+     * @param parent Parent JsonElement.
+     * @param neg TRUE if number is negative.
+     * @return JsonNumber element.
+     */
     static protected JsonNumber parseNumberNoThrow(Origin origin, JsonElement parent, boolean neg) {
         boolean isSingleNumber = isSingleNumber(origin, neg);
         StringBuilder sb = new StringBuilder();
@@ -538,6 +659,12 @@ public class JsonParser {
         }
     }
 
+    /**
+     * Check if all origin data is a single number.
+     * @param origin Origin data object.
+     * @param neg TRUE if number is negative.
+     * @return TRUE if origin data is a single number.
+     */
     static protected boolean isSingleNumber(Origin origin, boolean neg) {
         int index = origin.getIndex();
         if (neg)
@@ -545,18 +672,39 @@ public class JsonParser {
         else
             return ( index == 0);
     }
+
+    /**
+     * Check if the specified char is a letter.
+     * @param c Char.
+     * @return TRUE if specified char is a letter.
+     */
     static protected boolean isLetter(char c) {
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '_';
     }
 
+    /**
+     * Check if the specified char is a digit.
+     * @param c Char.
+     * @return TRUE if specified char is a digit.
+     */
     static protected boolean isDigit(char c) {
         return (c >= '0' && c <= '9');
     }
 
+    /**
+     * Check if the specified char is a hex digit.
+     * @param c Char.
+     * @return TRUE if specified char is a hex digit.
+     */
     static protected boolean isHexDigit(char c) {
         return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
     }
 
+    /**
+     * Convert hex digit to decimal value.
+     * @param c Char.
+     * @return Decimal value of the specified hex digit.
+     */
     static protected int convertHexDigit(char c) {
         if (c >= '0' && c <= '9')
             return c - '0';

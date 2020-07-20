@@ -27,6 +27,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonElement}.
+ */
 public class JsonElementTest {
 
     @Test

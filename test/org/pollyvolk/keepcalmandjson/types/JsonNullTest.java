@@ -27,6 +27,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Test case for {@link JsonNull}.
+ */
 public class JsonNullTest {
     @Test
     public void testJsonNullCreating() {

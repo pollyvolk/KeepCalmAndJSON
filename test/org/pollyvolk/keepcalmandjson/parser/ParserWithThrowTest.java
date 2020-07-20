@@ -33,6 +33,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonParser} methods that throw exceptions.
+ */
 public class ParserWithThrowTest {
 
     @Test

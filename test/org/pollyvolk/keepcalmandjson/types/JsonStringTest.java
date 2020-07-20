@@ -25,6 +25,9 @@ package org.pollyvolk.keepcalmandjson.types;
 
 import org.junit.Test;
 
+/**
+ * Test case for {@link JsonString}.
+ */
 public class JsonStringTest {
 
     @Test

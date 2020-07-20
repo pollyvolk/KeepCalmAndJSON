@@ -29,6 +29,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test case for {@link JsonObject}.
+ */
 public class JsonObjectTest {
 
     @Test
