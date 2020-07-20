@@ -111,7 +111,7 @@ public class JsonParser {
             case '"': {
                 origin.next();
                 String value = parseString(origin);
-                return value != null ? new JsonString(parent, value) : null;
+                return new JsonString(parent, value);
             }
             case '-':
                 c = origin.next();
@@ -410,7 +410,7 @@ public class JsonParser {
             c = origin.next();
         }
         if (c == 0)
-            throw new ExpectedStringException();;
+            throw new ExpectedStringException();
         origin.next();
         return sb.toString();
     }
@@ -472,39 +472,6 @@ public class JsonParser {
         return sb.toString();
     }
 
-    static protected JsonNumber parseNumberNoThrow(Origin origin, JsonElement parent, boolean neg) {
-        boolean isSingleNumber = isSingleNumber(origin, neg);
-        StringBuilder sb = new StringBuilder();
-        char c = origin.get();
-        do {
-            sb.append(c);
-            c = origin.next();
-        } while(isDigit(c));
-        if (c == '.') {
-            sb.append(c);
-            c = origin.next();
-            if (isDigit(c)) {
-                do {
-                    sb.append(c);
-                    c = origin.next();
-                } while(isDigit(c));
-            }
-        }
-        c = origin.getSkippingSpace();
-        if (isSingleNumber) {
-            if (c != 0)
-                return null;
-        } else if (c != ',' && c != '}' && c != ']')
-            return null;
-        try {
-            double value = Double.parseDouble(sb.toString());
-            return new JsonNumber(parent, neg ? -value : value);
-        }
-        catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
     static protected JsonNumber parseNumber(Origin origin, JsonElement parent, boolean neg) throws ExpectedNumberException {
         boolean isSingleNumber = isSingleNumber(origin, neg);
         StringBuilder sb = new StringBuilder();
@@ -535,6 +502,39 @@ public class JsonParser {
         }
         catch (NumberFormatException e) {
             throw new ExpectedNumberException();
+        }
+    }
+
+    static protected JsonNumber parseNumberNoThrow(Origin origin, JsonElement parent, boolean neg) {
+        boolean isSingleNumber = isSingleNumber(origin, neg);
+        StringBuilder sb = new StringBuilder();
+        char c = origin.get();
+        do {
+            sb.append(c);
+            c = origin.next();
+        } while(isDigit(c));
+        if (c == '.') {
+            sb.append(c);
+            c = origin.next();
+            if (isDigit(c)) {
+                do {
+                    sb.append(c);
+                    c = origin.next();
+                } while(isDigit(c));
+            }
+        }
+        c = origin.getSkippingSpace();
+        if (isSingleNumber) {
+            if (c != 0)
+                return null;
+        } else if (c != ',' && c != '}' && c != ']')
+            return null;
+        try {
+            double value = Double.parseDouble(sb.toString());
+            return new JsonNumber(parent, neg ? -value : value);
+        }
+        catch (NumberFormatException e) {
+            return null;
         }
     }
 
