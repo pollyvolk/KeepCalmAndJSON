@@ -9,6 +9,7 @@ The tool also includes the convenient JSON parser.
 You can load a jar file of the **KeepCalmAndJSON** and use it in your projects as a library.
 
 ## JSON data types
+
 **KeepCalmAndJSON** represents JSON structure in Java using these data types:
 * ``JsonElement`` - abstract class representing very JSON element, e.g. number, string, array as a value in JSON object.
 
@@ -28,7 +29,7 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 
 ## Features of source JSON code format
 
-#### Keys can be without quotes
+### You can pass keys without quotes
 ```
 {
   key1 : "value1",
@@ -37,9 +38,9 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 }
 ```
 
-#### Trailing commas permitted
+### Trailing commas are permitted
 
-**Example 1**
+#### Example 1
 
 ```
 {
@@ -48,7 +49,7 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
   "key3" : 123,
 }
 ```
-**Example 2**
+#### Example 2
 ```
 {
   "key1" : "value1",
@@ -61,9 +62,9 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 }
 ```
 
-## Examples of using
+## Usage examples:
 
-#### Example of parsing JSON from source String
+### Example of parsing JSON from source String
 
 ```java
 void func() throws JsonParserException {
@@ -80,7 +81,7 @@ void func() {
 ```
 if you do not want exceptions to be thrown. Using this method don`t forget to avoid the NullPointerException.
 
-#### Example of wrong input case
+### Example of wrong input case
 
 ```
 void func() throws JsonParserException {
@@ -96,9 +97,9 @@ org.pollyvolk.keepcalmandjson.parser.exceptions.ExpectedJsonElementException
 	at org.pollyvolk.keepcalmandjson.parser.JsonParser.parse(JsonParser.java:143)
 ```
 
-#### Example of processing element content received after parsing
+### Example of processing element content received after parsing
 
-**Example 1 - Getting value by key**
+#### Example 1 - Get value by key
 
 ```java
 public class Example {
@@ -125,7 +126,7 @@ Output:
 123
 ```
 
-**Example 2 - Processing elements of array**
+#### Example 2 - Process elements of array
 
 ```java
 public class Example {
@@ -171,7 +172,7 @@ Kotlin
 Go
 ```
 
-**Example 3 - Adding new elements to array**
+#### Example 3 - Add new elements to array
 
 ```java
 public class Example {
@@ -226,7 +227,7 @@ Output:
 ]
 ```
 
-**Example 4 - Adding new elements to object**
+#### Example 4 - Add new elements to object
 
 ```java
 public class Example {
@@ -284,10 +285,10 @@ Output:
 }
 ```
 
-#### Example of converting Java objects into JSON
+### Example of converting Java objects into JSON
 Using Java classes mentioned above it is possible to create a whole JSON object with elements or more simple JSON types, e.g. strings, arrays, numbers, and convert them into JSON representation. 
 
-**Example 1 - Creating JSON simple types**
+#### Example 1 - Create JSON simple types
 
 The first argument in type classes constructor is a parent element. It can be null for separate elements.
 ```java
@@ -317,7 +318,7 @@ Output:
 ]
 ```
 
-**Example 2 - Creating JSON objects**
+#### Example 2 - Create JSON objects
 
 ```java
 public class Example {
