@@ -65,14 +65,14 @@ You can load a jar file of the **KeepCalmAndJSON** and use it in your projects a
 
 #### Example of parsing JSON from source String
 
-```
+```java
 void func() throws JsonParserException {
         String data = "{\"key1\" : \"value1\", \"key2\" : 2}";
         JsonElement jsData = JsonParser.parse(data);
 }
 ```
 or
-```
+```java
 void func() {
         String data = "{\"key1\" : \"value1\", \"key2\" : 2}";
         JsonElement jsData = JsonParser.parseNoThrow(data);
