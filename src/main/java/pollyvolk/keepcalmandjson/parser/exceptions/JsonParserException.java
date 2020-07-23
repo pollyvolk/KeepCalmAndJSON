@@ -24,7 +24,7 @@
 package pollyvolk.keepcalmandjson.parser.exceptions;
 
 /**
- * Exception thrown by parser {@link org.pollyvolk.keepcalmandjson.parser.JsonParser}.
+ * Exception thrown by parser {@link pollyvolk.keepcalmandjson.parser.JsonParser}.
  */
 public abstract class JsonParserException extends Exception {
 

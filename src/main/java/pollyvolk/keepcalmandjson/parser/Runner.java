@@ -1,4 +1,4 @@
-package java.pollyvolk.keepcalmandjson.parser;
+package pollyvolk.keepcalmandjson.parser;
 
 public class Runner {
     public static void main(String[] args){
