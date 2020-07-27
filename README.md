@@ -91,10 +91,10 @@ void func() throws JsonParserException {
 ```
 will cause JsonParserException:
 ```
-org.pollyvolk.keepcalmandjson.parser.exceptions.ExpectedJsonElementException
-	at org.pollyvolk.keepcalmandjson.parser.JsonParser.parseObject(JsonParser.java:320)
-	at org.pollyvolk.keepcalmandjson.parser.JsonParser.parse(JsonParser.java:170)
-	at org.pollyvolk.keepcalmandjson.parser.JsonParser.parse(JsonParser.java:143)
+org.cqfn.keepcalmandjson.parser.exceptions.ExpectedJsonElementException
+	at org.cqfn.keepcalmandjson.parser.JsonParser.parseObject(JsonParser.java:320)
+	at org.cqfn.keepcalmandjson.parser.JsonParser.parse(JsonParser.java:170)
+	at org.cqfn.keepcalmandjson.parser.JsonParser.parse(JsonParser.java:143)
 ```
 
 ### Example of processing element content received after parsing
