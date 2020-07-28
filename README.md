@@ -1,6 +1,9 @@
 # KeepCalmAndJSON
 <img src="https://raw.githubusercontent.com/pollyvolk/logos/master/KeepCalmAndJSON_logo.png?sanitize=true" width="200" height="250">
 
+![Java CI with Maven](https://github.com/pollyvolk/KeepCalmAndJSON/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Build Status](https://travis-ci.com/pollyvolk/KeepCalmAndJSON.svg?branch=master)](https://travis-ci.com/github/pollyvolk/KeepCalmAndJSON)
+
 
 **KeepCalmAndJSON** is a library for representing JSON code as a structure of Java objects that can be easily processed in Java projects. 
 The tool also includes the convenient JSON parser.
