@@ -4,8 +4,6 @@ sudo: false # faster builds
 jdk:
   - openjdk8
 
-install: true
-script:
-  - mvn install
+install: mvn install
 after_success:
   - bash <(curl -s https://codecov.io/bash)
