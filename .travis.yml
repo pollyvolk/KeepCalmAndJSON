@@ -3,9 +3,10 @@ sudo: false # faster builds
 
 jdk:
   - openjdk8
-
+env:
+  global:
+    - CODECOV_TOKEN=659057f4-211b-425d-8f6a-1f7587d0e425
 script:
   - mvn clean package
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
