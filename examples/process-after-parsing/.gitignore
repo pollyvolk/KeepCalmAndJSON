@@ -1,0 +1,26 @@
+Intellij  files
+**/.idea
+**/*.iml
+
+# target files
+**/target
+**/out
+
+
+# Package Files #
+*.war
+*.ear
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+
+**/logs
+**/log/*
+**/report/*
+
+/custom-checker/out_file
+Data/*
+
+ci

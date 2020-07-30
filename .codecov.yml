@@ -1,0 +1,3 @@
+# Ignoring Paths
+ignore:
+  - examples/*
