@@ -64,9 +64,9 @@ the input source JSON data is
 
 ```json
 {
-  key1 : "value1",
-  key2 : "value2",
-  key3 : 123
+  "key1" : "value1",
+  "key2" : "value2",
+  "key3" : 123
 }
 ```
 
@@ -116,7 +116,7 @@ the input source JSON data is
 }
 ```
 
-If parsed and typecasted to `JsonObject` data (like in [Example 1](#example-1)) is stored in the `jsonObject` variable
+If parsed and typecasted to `JsonObject` data (like in [Example 1](#example-1---get-value-by-key)) is stored in the `jsonObject` variable
 in the next step you can get the array:
 
 ```java
@@ -144,7 +144,7 @@ Two ways of adding elements to `JsonArray` are possible:
 
 * Using special methods that create elements from value and add them
 
-E.g. for the `JsonArray` from [Example 2](#example-2)
+E.g. for the `JsonArray` from [Example 2](#example-2---process-elements-of-array)
 
 *Method 1 - Add JsonElement created before*
 
