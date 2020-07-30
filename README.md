@@ -56,8 +56,6 @@ For more information about data types, see [JSON data types](README.md#json-data
 
 <details>
   <summary><b>Example 1 - Get value by key</b></summary><br>
-   
-#### Example 1 - Get value by key
 
 For the [example - Get value by key](examples/process-after-parsing/src/main/java/org/cqfn/keepcalmandjson/example/GetValueByKey.java)
 the input source JSON data is
@@ -97,8 +95,6 @@ Output:
 
 <details>
   <summary><b>Example 2 - Process elements of array</b></summary><br>
-  
-#### Example 2 - Process elements of array
 
 For the [example - Process array content](examples/process-after-parsing/src/main/java/org/cqfn/keepcalmandjson/example/ProcessArrayContent.java)
 the input source JSON data is
@@ -116,7 +112,7 @@ the input source JSON data is
 }
 ```
 
-If parsed and typecasted to `JsonObject` data (like in [Example 1](#example-1---get-value-by-key)) is stored in the `jsonObject` variable
+If parsed and typecasted to `JsonObject` data (like in [Example 1]) is stored in the `jsonObject` variable
 in the next step you can get the array:
 
 ```java
@@ -132,8 +128,6 @@ Then you can get all the elements as a list of `JsonElement` and process them in
 
 <details>
   <summary><b>Example 3 - Add new elements to array</b></summary><br>
-  
-#### Example 3 - Add new elements to array
 
 Open [example - Add array elements](examples/process-after-parsing/src/main/java/org/cqfn/keepcalmandjson/example/AddArrayElements.java)
 to see a full example.
@@ -144,7 +138,7 @@ Two ways of adding elements to `JsonArray` are possible:
 
 * Using special methods that create elements from value and add them
 
-E.g. for the `JsonArray` from [Example 2](#example-2---process-elements-of-array)
+E.g. for the `JsonArray` from [Example 2])
 
 *Method 1 - Add JsonElement created before*
 
@@ -199,8 +193,6 @@ Output:
 
 <details>
   <summary><b>Example 4 - Add new elements to object</b></summary><br>
-  
-#### Example 4 - Add new elements to object
 
 Open [example - Add object elements](examples/process-after-parsing/src/main/java/org/cqfn/keepcalmandjson/example/AddObjectElements.java)
  to see a full example.
@@ -278,8 +270,6 @@ e.g. strings, arrays, numbers, and convert them into JSON representation.
 
 <details>
   <summary><b>Example 1 - Create JSON simple types</b></summary><br>
-  
-#### Example 1 - Create JSON simple types
 
 Open [example - Create simple JSON types](examples/convert-java-into-json/src/main/java/org/cqfn/keepcalmandjson/example/CreateSimpleJsonTypes.java) 
 to see an example.
@@ -341,8 +331,6 @@ true
 
 <details>
   <summary><b>Example 2 - Create JSON objects</b></summary><br>
-  
-#### Example 2 - Create JSON objects
 
 Open [example - Create JSON object](examples/convert-java-into-json/src/main/java/org/cqfn/keepcalmandjson/example/CreateJsonObjects.java) 
 to see an example.
